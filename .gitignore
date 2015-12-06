@@ -1,0 +1,9 @@
+\#*\#
+*~
+*.o
+*.so
+*.swiftmodule
+*.swiftdoc
+translate.exe
+escapetext
+escapeswift
