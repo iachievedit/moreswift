@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # escapetext C application
-gcc -D__TEST__ -o escapetext escapetext.c -lcurl
+clang -D__TEST__ -o escapetext escapetext.c -lcurl
 
 # escapeswift Swift application
 gcc -c escapetext.c
