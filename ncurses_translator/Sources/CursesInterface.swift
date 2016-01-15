@@ -70,6 +70,7 @@ class CursesInterface {
 
   class func reset() {
     endwin()
+    refresh()
     initscr()
     clear()
     noecho()
