@@ -4,6 +4,7 @@
 *.so
 *.swiftmodule
 *.swiftdoc
+.build
 translate.exe
 escapetext
 escapeswift
