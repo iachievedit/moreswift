@@ -26,8 +26,13 @@ func trap(signum:Signal, action:SignalHandler) {
   signal(signum.rawValue, action)
 }
 
+func mvprintw(y y:Int32, x:Int32, str:String) -> Int32 {
+  move(y,x)
+  return addstr(str)
+}
+
 class CursesInterface {
-  // Class 
+  
   static let delim:Character     = "\n"
   static let backspace:Character = Character(UnicodeScalar(127))
   static let A_REVERSE = Int32(1 << 18)
@@ -66,7 +71,6 @@ class CursesInterface {
     CursesInterface.reset()
     CursesInterface.getDisplaySize()
     CursesInterface.displayStatusBar(CursesInterface.prompt)
-
   }
 
   class func reset() {
@@ -97,7 +101,7 @@ class CursesInterface {
       paddedStatus += " "
     }
     
-    move(CursesInterface.statusLine, 0)
+    move(statusLine, 0)
     attron(A_REVERSE)
     addstr(paddedStatus)
     addch(UInt(" "))
@@ -148,10 +152,10 @@ class CursesInterface {
 
   class func displayInput() {
     // We assume that SIGWINCH has been received and we need to redraw our
-    // input bar.  curx is where the cursor was when the signal was received
-    // and input contains the contents of the current buffer
-    move(inputLine, 0)
-    addstr(input)
+    // input bar.  input contains the contents of the current buffer.
+    mvprintw(y:inputLine, x:0, str:input)
+    //move(inputLine, 0)
+    //addstr(input)
     refresh()
     
   }

@@ -58,9 +58,15 @@ class CommandInterpreter {
     case "/quit":
       commandType = .Quit
     case "/from":
+      guard tokens.count == 2 else {
+        return Command(type:.None, data:"")
+      }
       commandType = .SetFrom
       commandData = tokens[1]
     case "/to":
+      guard tokens.count == 2 else {
+        return Command(type:.None, data:"")
+      }
       commandType = .SetTo
       commandData = tokens[1]
     default:
