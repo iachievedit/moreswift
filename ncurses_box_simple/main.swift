@@ -4,7 +4,6 @@ import Glibc
 
 enum Signal:Int32 {
 case INT   = 2
-case WINCH = 28
 }
 
 typealias SignalHandler = __sighandler_t
@@ -47,7 +46,6 @@ func centerText(text:String, numlines:Int32, numcols:Int32) {
   refresh()
 }
 
-
 trap(.INT) { signal in
   endwin()
   exit(0)
@@ -56,32 +54,14 @@ trap(.INT) { signal in
 var maxy:Int32     = 0
 var maxx:Int32     = 0
 
-trap(.WINCH) { signal in
-  endwin()
-  refresh() 
-  initscr()
-  clear()
-
-  getmaxyx(stdscr, y:&maxy, x:&maxx)
-  drawbox(maxy, numcols:maxx)
-  centerText("Hello world!", numlines:maxy, numcols:maxx)
-}
-
 initscr()
 noecho()
 curs_set(0)
 getmaxyx(stdscr, y:&maxy, x:&maxx)
 
-/*
-// Extra credit, working with colors
-start_color()
-init_pair(1, Int16(COLOR_RED), Int16(COLOR_BLACK))
-attron(COLOR_PAIR(1))
-*/
 drawbox(maxy, numcols:maxx)
 centerText("Hello world!", numlines:maxy, numcols:maxx)
 
-while true {
-  select(0, nil, nil, nil, nil)
-}
+select(0, nil, nil, nil, nil)
+endwin()
 

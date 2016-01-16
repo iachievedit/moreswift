@@ -38,7 +38,7 @@ class CursesInterface {
   static var maxx:Int32     = 0
   static var cury:Int32     = 0
   static var curx:Int32     = 0
-  static var inputCol:Int32 = 0
+  static let inputCol:Int32 = 0
 
   static var liny:Int32 = 0
 
@@ -60,6 +60,7 @@ class CursesInterface {
       CursesInterface.reset()
       CursesInterface.getDisplaySize()
       CursesInterface.displayStatusBar(CursesInterface.prompt)
+      CursesInterface.displayInput()
     }
 
     CursesInterface.reset()
@@ -116,9 +117,9 @@ class CursesInterface {
     exit(0)
   }
 
+  static var input:String = ""
   class func getInput() -> String {
-    var input:String = ""
-
+    input = ""
     curx = inputCol
     move(inputLine, curx)
     refresh()
@@ -137,11 +138,22 @@ class CursesInterface {
         return input
       default:
         if isprint(Int32(ic)) != 0 {
-        addch(UInt(ic)); curx += 1
-        input.append(c)
+          addch(UInt(ic)); curx += 1
+          refresh()
+          input.append(c)
         }
       }
     }
+  }
+
+  class func displayInput() {
+    // We assume that SIGWINCH has been received and we need to redraw our
+    // input bar.  curx is where the cursor was when the signal was received
+    // and input contains the contents of the current buffer
+    move(inputLine, 0)
+    addstr(input)
+    refresh()
+    
   }
 
   class func clearline(lineno:Int32) {

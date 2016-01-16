@@ -36,7 +36,7 @@ noecho()    // Turn on noecho, though it doesn't matter in this example
 curs_set(0) // 0 is invisible, 1 is visible, 2 is very visible
 
 move(0, 0)
-addstr("UR")
+addstr("UL")
 refresh() // This is required to update the screen
 move(23,78)
 addstr("LR")
