@@ -57,8 +57,8 @@ class CommandInterpreter {
       while true {
         let c = Character(UnicodeScalar(UInt32(fgetc(stdin))))
         if c == self.delim {
-          let command = self.parseInput(input)
-          self.doCommand(command)
+          let command = self.parseInput(input:input)
+          self.doCommand(command:command)
           input = "" // Clear input
           self.displayPrompt()
         } else {
