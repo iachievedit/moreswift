@@ -18,7 +18,7 @@ import Glibc
 let interpreter = CommandInterpreter()
 let translator  = Translator()
 
-nc.addObserverForName(INPUT_NOTIFICATION, object:nil, queue:nil) {
+let _ = nc.addObserverForName(INPUT_NOTIFICATION, object:nil, queue:nil) {
   (_) in
   let tc = translationCommand
   CursesInterface.displayStatusBar(status:"Translating")
