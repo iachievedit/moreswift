@@ -42,19 +42,19 @@ public class Translator {
     }
     
     let langPair = from + "%7c" + to
-    let wgetCommand = "wget -qO- http://api.mymemory.translated.net/get\\?q\\=" + String.fromCString(escapedText)! + "\\&langpair\\=" + langPair
+    let wgetCommand = "wget -qO- http://api.mymemory.translated.net/get\\?q\\=" + String(cString:escapedText!) + "\\&langpair\\=" + langPair
     
     let pp      = popen(wgetCommand, "r")
-    var buf     = [CChar](count:BUFSIZE, repeatedValue:CChar(0))
+    var buf     = [CChar](repeating:0, count:BUFSIZE)
     
     var response:String = ""
     while fgets(&buf, Int32(BUFSIZE), pp) != nil {
-      response = response + String.fromCString(buf)!
+      response = response + String(cString:buf)
     }
     
     let translated = translatedText(response)
 
-    completion(translation:String.fromCString(translated)!,
+    completion(translation:String(cString:translated!),
                error:nil)
   }
 

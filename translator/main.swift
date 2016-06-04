@@ -28,7 +28,7 @@ let fromLang   = Process.arguments[3]
 let toLang     = Process.arguments[5]
 let translator = Translator()
 
-translator.translate(string, from:fromLang, to:toLang) {
+translator.translate(text:string, from:fromLang, to:toLang) {
   (translation:String?, error:NSError?) -> Void in
   guard error == nil && translation != nil else {
     print("Error:  No translation available")

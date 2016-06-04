@@ -26,7 +26,7 @@ func trap(signum:Signal, action:SignalHandler) {
   signal(signum.rawValue, action)
 }
 
-trap(.INT) { signal in
+trap(signum:.INT) { signal in
   endwin()
   exit(0)
 }

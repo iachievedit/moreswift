@@ -21,28 +21,28 @@ let translator  = Translator()
 nc.addObserverForName(INPUT_NOTIFICATION, object:nil, queue:nil) {
   (_) in
   let tc = translationCommand
-  CursesInterface.displayStatusBar("Translating")
-  translator.translate(tc.text, from:tc.from, to:tc.to){
+  CursesInterface.displayStatusBar(status:"Translating")
+  translator.translate(text:tc.text, from:tc.from, to:tc.to){
     translation, error in
     guard error == nil && translation != nil else {
-      CursesInterface.displayTranslation("Translation failure:  \(error!.code)")
+      CursesInterface.displayTranslation(translation:"Translation failure:  \(error!.code)")
       return
     }
-    CursesInterface.displayTranslation(translation!)
+    CursesInterface.displayTranslation(translation:translation!)
   }
 }
 
-nc.addObserverForName(QUIT_NOTIFICATION, object:nil, queue:nil) {
+let _ = nc.addObserverForName(QUIT_NOTIFICATION, object:nil, queue:nil) {
   (_) in
   CursesInterface.end()
 }
 
 CursesInterface.start()
 while true {
-  CursesInterface.setPrompt(interpreter.prompt)
+  CursesInterface.setPrompt(prompt:interpreter.prompt)
   CursesInterface.displayStatusBar()
   let input   = CursesInterface.getInput()
-  let command = interpreter.parseInput(input)
-  interpreter.doCommand(command)
+  let command = interpreter.parseInput(input:input)
+  interpreter.doCommand(command:command)
 }
 

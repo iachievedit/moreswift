@@ -26,7 +26,7 @@ func trap(signum:Signal, action:SignalHandler) {
   signal(signum.rawValue, action)
 }
 
-func mvprintw(y y:Int32, x:Int32, str:String) -> Int32 {
+func mvprintw(y:Int32, x:Int32, str:String) -> Int32 {
   move(y,x)
   return addstr(str)
 }
@@ -58,19 +58,19 @@ class CursesInterface {
     }
   }
   class func start() {
-    trap(.INT) { signal in
+    trap(signum:.INT) { signal in
       CursesInterface.end()
     }
-    trap(.WINCH) { signal in
+    trap(signum:.WINCH) { signal in
       CursesInterface.reset()
       CursesInterface.getDisplaySize()
-      CursesInterface.displayStatusBar(CursesInterface.prompt)
+      CursesInterface.displayStatusBar(status:CursesInterface.prompt)
       CursesInterface.displayInput()
     }
 
     CursesInterface.reset()
     CursesInterface.getDisplaySize()
-    CursesInterface.displayStatusBar(CursesInterface.prompt)
+    CursesInterface.displayStatusBar(status:CursesInterface.prompt)
   }
 
   class func reset() {
@@ -138,7 +138,7 @@ class CursesInterface {
         refresh()
         input = String(input.characters.dropLast())
       case delim:
-        clearline(inputLine)
+        clearline(lineno:inputLine)
         return input
       default:
         if isprint(Int32(ic)) != 0 {
@@ -153,7 +153,7 @@ class CursesInterface {
   class func displayInput() {
     // We assume that SIGWINCH has been received and we need to redraw our
     // input bar.  input contains the contents of the current buffer.
-    mvprintw(y:inputLine, x:0, str:input)
+    let _ = mvprintw(y:inputLine, x:0, str:input)
     //move(inputLine, 0)
     //addstr(input)
     refresh()
