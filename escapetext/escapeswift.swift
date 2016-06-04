@@ -7,7 +7,7 @@ guard Process.arguments.count == 2 else {
 }
 
 let string = Process.arguments[1]
-var output:UnsafeMutablePointer<Int8> = nil
+var output:UnsafeMutablePointer<Int8>? = nil
 
 let rc = escapeText(string, &output)
 
@@ -16,5 +16,5 @@ guard rc > 0 else {
   exit(-1)
 }
 
-print("Escaped text:  \(String.fromCString(output)!)")
+print("Escaped text:  \(String(cString:output!))")
 exit(0)
