@@ -1,19 +1,20 @@
 import Foundation
 import Glibc
 
-let INPUT_NOTIFICATION = "InputNotification"
-let nc = NSNotificationCenter.defaultCenter()
+let inputNotificationName = Notification.Name(rawValue:"InputNotification")
+let inputNotification = Notification(name:inputNotificationName, object:nil)
+let nc = NotificationCenter.defaultCenter()
 
 var availableData = ""
-let readThread = NSThread(){
-  print("Entering thread")
+let readThread = Thread(){
+  print("Entering thread... type something and have it echoed.")
   let delim:Character = "\n"
   var input:String    = ""
   while true {
     let c = Character(UnicodeScalar(UInt32(fgetc(stdin))))
     if c == delim {
       availableData = input
-      nc.postNotificationName(INPUT_NOTIFICATION, object:nil)
+      nc.postNotification(inputNotification)
       input = ""
     } else {
       input.append(c)
@@ -22,9 +23,9 @@ let readThread = NSThread(){
   // Our read thread never exits
 }
 
-nc.addObserverForName(INPUT_NOTIFICATION, object:nil, queue:nil) {
+_ = nc.addObserverForName(inputNotificationName, object:nil, queue:nil) {
   (_) in
-  print("Data received:  \(availableData)")
+  print("Echo:  \(availableData)")
 }
 
 readThread.start()
