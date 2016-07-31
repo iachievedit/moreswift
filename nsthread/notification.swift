@@ -11,7 +11,7 @@ let readThread = Thread(){
   let delim:Character = "\n"
   var input:String    = ""
   while true {
-    let c = Character(UnicodeScalar(UInt32(fgetc(stdin))))
+    let c = Character(UnicodeScalar(UInt32(fgetc(stdin)))!)
     if c == delim {
       availableData = input
       nc.postNotification(inputNotification)
