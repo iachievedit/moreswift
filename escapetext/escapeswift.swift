@@ -1,12 +1,12 @@
 import Foundation
 import Glibc
 
-guard Process.arguments.count == 2 else {
+guard CommandLine.arguments.count == 2 else {
   print("Usage:  escapeswift STRING")
   exit(-1)
 }
 
-let string = Process.arguments[1]
+let string = CommandLine.arguments[1]
 var output:UnsafeMutablePointer<Int8>? = nil
 
 let rc = escapeText(string, &output)
