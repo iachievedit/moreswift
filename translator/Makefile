@@ -13,7 +13,7 @@ $(APP):	libtranslator.so translator.swiftmodule jsonparse.o main.o
 
 libtranslator.so:	translator.o
 	swiftc -Xcc -D_VA_LIST -emit-library translator.swift -module-name translator -import-objc-header bridgingHeader.h
-	clang -shared -o libtranslator.so translator.o
+	gold -shared -o libtranslator.so translator.o
 
 translator.swiftmodule:	libtranslator.so
 	swiftc -Xcc -D_VA_LIST -emit-module -module-name translator translator.swift -import-objc-header bridgingHeader.h
