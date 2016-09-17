@@ -1,11 +1,11 @@
 import Glibc
 
-guard Process.arguments.count == 2 else {
+guard CommandLine.arguments.count == 2 else {
   print("Usage:  swiftcat FILENAME")
   exit(-1)
 }
 
-let filename = Process.arguments[1]
+let filename = CommandLine.arguments[1]
 
 let BUFSIZE = 1024
 var pp      = popen("cat " + filename, "r")
