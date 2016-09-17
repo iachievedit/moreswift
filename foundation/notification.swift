@@ -3,7 +3,7 @@ import Glibc
 
 let inputNotificationName = Notification.Name(rawValue:"InputNotification")
 let inputNotification = Notification(name:inputNotificationName, object:nil)
-let nc = NotificationCenter.defaultCenter()
+let nc = NotificationCenter.default
 
 var availableData = ""
 let readThread = Thread(){
@@ -14,7 +14,7 @@ let readThread = Thread(){
     let c = Character(UnicodeScalar(UInt32(fgetc(stdin)))!)
     if c == delim {
       availableData = input
-      nc.postNotification(inputNotification)
+      nc.post(inputNotification)
       input = ""
     } else {
       input.append(c)
@@ -23,7 +23,7 @@ let readThread = Thread(){
   // Our read thread never exits
 }
 
-_ = nc.addObserverForName(inputNotificationName, object:nil, queue:nil) {
+_ = nc.addObserver(forName:inputNotificationName, object:nil, queue:nil) {
   (_) in
   print("Echo:  \(availableData)")
 }
