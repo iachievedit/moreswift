@@ -19,7 +19,7 @@ let interpreter = CommandInterpreter()
 let translator  = Translator()
 
 // Listen for events to translate
-let _ = nc.addObserverForName(INPUT_NOTIFICATION, object:nil, queue:nil) {
+let _ = nc.addObserver(forName:INPUT_NOTIFICATION, object:nil, queue:nil) {
   (_) in
   let tc = translationCommand
   translator.translate(text:tc.text, from:tc.from, to:tc.to){
