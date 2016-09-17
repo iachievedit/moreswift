@@ -18,7 +18,7 @@ import Glibc
 let interpreter = CommandInterpreter()
 let translator  = Translator()
 
-let _ = nc.addObserverForName(INPUT_NOTIFICATION, object:nil, queue:nil) {
+let _ = nc.addObserver(forName:INPUT_NOTIFICATION, object:nil, queue:nil) {
   (_) in
   let tc = translationCommand
   CursesInterface.displayStatusBar(status:"Translating")
@@ -32,7 +32,7 @@ let _ = nc.addObserverForName(INPUT_NOTIFICATION, object:nil, queue:nil) {
   }
 }
 
-let _ = nc.addObserverForName(QUIT_NOTIFICATION, object:nil, queue:nil) {
+let _ = nc.addObserver(forName:QUIT_NOTIFICATION, object:nil, queue:nil) {
   (_) in
   CursesInterface.end()
 }

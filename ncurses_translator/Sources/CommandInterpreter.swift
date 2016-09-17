@@ -79,14 +79,14 @@ class CommandInterpreter {
   func doCommand(command:Command) {
     switch command.type {
     case .Quit:
-      nc.postNotificationName(QUIT_NOTIFICATION, object:nil)
+      nc.post(Notification(name:QUIT_NOTIFICATION, object:nil))
     case .SetFrom:
       translationCommand.from = command.data
     case .SetTo:
       translationCommand.to   = command.data
     case .Translate:
       translationCommand.text = command.data
-      nc.postNotificationName(INPUT_NOTIFICATION, object:nil)
+      nc.post(Notification(name:INPUT_NOTIFICATION, object:nil))
     case .None:
       break
     }

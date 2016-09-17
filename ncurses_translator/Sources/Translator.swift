@@ -25,21 +25,21 @@ class Translator {
   }
 
   func translate(text:String, from:String, to:String,
-                        completion:(translation:String?, error:NSError?) -> Void) {
+                        completion:(String?, NSError?) -> Void) {
 
     let curl = curl_easy_init()
 
     guard curl != nil else {
-      completion(translation:nil,
-                 error:NSError(domain:"translator", code:1, userInfo:nil))
+      completion(nil,
+                 NSError(domain:"translator", code:1, userInfo:nil))
       return
     }
 
     let escapedText = curl_easy_escape(curl, text, Int32(strlen(text)))
 
     guard escapedText != nil else {
-      completion(translation:nil,
-                 error:NSError(domain:"translator", code:2, userInfo:nil))
+      completion(nil,
+                 NSError(domain:"translator", code:2, userInfo:nil))
       return
     }
     
@@ -57,11 +57,11 @@ class Translator {
     let translation = getTranslatedText(jsonString:response)
 
     guard translation.error == nil else {
-      completion(translation:nil, error:translation.error)
+      completion(nil, translation.error)
       return
     }
 
-    completion(translation:translation.translation, error:nil)
+    completion(translation.translation, nil)
   }
 
   private func getTranslatedText(jsonString:String) -> (error:NSError?, translation:String?) {
