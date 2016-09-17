@@ -13,8 +13,8 @@
 // limitations under the License.
 import Foundation
 
-let INPUT_NOTIFICATION   = "InputNotification"
-let nc = NSNotificationCenter.defaultCenter()
+let INPUT_NOTIFICATION   = Notification.Name(rawValue:"InputNotification")
+let nc = NotificationCenter.default
 
 struct TranslationCommand {
   var from:String

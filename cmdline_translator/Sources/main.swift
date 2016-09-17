@@ -19,10 +19,10 @@ let interpreter = CommandInterpreter()
 let translator  = Translator()
 
 // Listen for events to translate
-nc.addObserverForName(INPUT_NOTIFICATION, object:nil, queue:nil) {
+let _ = nc.addObserver(forName:INPUT_NOTIFICATION, object:nil, queue:nil) {
   (_) in
   let tc = translationCommand
-  translator.translate(tc.text, from:tc.from, to:tc.to){
+  translator.translate(text:tc.text, from:tc.from, to:tc.to){
     translation, error in
     guard error == nil && translation != nil else {
       print("Translation failure:  \(error!.code)")

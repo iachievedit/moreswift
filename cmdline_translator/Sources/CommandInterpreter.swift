@@ -46,7 +46,7 @@ class CommandInterpreter {
   }
 
   func start() {
-    let readThread = NSThread(){
+    let readThread = Thread(){
       var input:String    = ""
       
       print("To set input language, type 'from LANG'")
@@ -55,10 +55,10 @@ class CommandInterpreter {
       self.displayPrompt()
 
       while true {
-        let c = Character(UnicodeScalar(UInt32(fgetc(stdin))))
+        let c = Character(UnicodeScalar(UInt32(fgetc(stdin)))!)
         if c == self.delim {
-          let command = self.parseInput(input)
-          self.doCommand(command)
+          let command = self.parseInput(input:input)
+          self.doCommand(command:command)
           input = "" // Clear input
           self.displayPrompt()
         } else {
@@ -112,7 +112,7 @@ class CommandInterpreter {
       translationCommand.to   = command.data
     case .Translate:
       translationCommand.text = command.data
-      nc.postNotificationName(INPUT_NOTIFICATION, object:nil)
+      nc.post(Notification(name:INPUT_NOTIFICATION, object:nil))
     case .None:
       break
     }

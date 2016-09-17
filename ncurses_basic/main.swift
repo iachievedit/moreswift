@@ -22,11 +22,11 @@ case WINCH = 28
 
 typealias SignalHandler = __sighandler_t
 
-func trap(signum:Signal, action:SignalHandler) {
+func trap(signum:Signal, action:@escaping SignalHandler) {
   signal(signum.rawValue, action)
 }
 
-trap(.INT) { signal in
+trap(signum:.INT) { signal in
   endwin()
   exit(0)
 }

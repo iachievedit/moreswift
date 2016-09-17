@@ -23,39 +23,39 @@ public class Translator {
   }
 
   public func translate(text:String, from:String, to:String,
-                        completion:(translation:String?, error:NSError?) -> Void) {
+                        completion:(String?, NSError?) -> Void) {
 
     let curl = curl_easy_init()
 
     guard curl != nil else {
-      completion(translation:nil,
-                 error:NSError(domain:"translator", code:1, userInfo:nil))
+      completion(nil,
+                 NSError(domain:"translator", code:1, userInfo:nil))
       return
     }
 
     let escapedText = curl_easy_escape(curl, text, Int32(strlen(text)))
 
     guard escapedText != nil else {
-      completion(translation:nil,
-                 error:NSError(domain:"translator", code:2, userInfo:nil))
+      completion(nil,
+                 NSError(domain:"translator", code:2, userInfo:nil))
       return
     }
     
     let langPair = from + "%7c" + to
-    let wgetCommand = "wget -qO- http://api.mymemory.translated.net/get\\?q\\=" + String.fromCString(escapedText)! + "\\&langpair\\=" + langPair
+    let wgetCommand = "wget -qO- http://api.mymemory.translated.net/get\\?q\\=" + String(cString:escapedText!) + "\\&langpair\\=" + langPair
     
     let pp      = popen(wgetCommand, "r")
-    var buf     = [CChar](count:BUFSIZE, repeatedValue:CChar(0))
+    var buf     = [CChar](repeating:0, count:BUFSIZE)
     
     var response:String = ""
     while fgets(&buf, Int32(BUFSIZE), pp) != nil {
-      response = response + String.fromCString(buf)!
+      response = response + String(cString:buf)
     }
     
     let translated = translatedText(response)
 
-    completion(translation:String.fromCString(translated)!,
-               error:nil)
+    completion(String(cString:translated!),
+               nil)
   }
 
 }

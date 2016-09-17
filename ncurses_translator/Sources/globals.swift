@@ -13,9 +13,9 @@
 // limitations under the License.
 import Foundation
 
-let INPUT_NOTIFICATION   = "InputNotification"
-let QUIT_NOTIFICATION    = "QuitNotification"
-let nc = NSNotificationCenter.defaultCenter()
+let INPUT_NOTIFICATION   = Notification.Name(rawValue:"InputNotification")
+let QUIT_NOTIFICATION    = Notification.Name(rawValue:"QuitNotification")
+let nc = NotificationCenter.default
 
 struct TranslationCommand {
   var from:String
